@@ -1,21 +1,22 @@
 package se.kth.iv1350.retailstore.controller;
 
-import se.kth.iv1350.retailstore.integration.Printer;
 import se.kth.iv1350.retailstore.model.Sale;
+import se.kth.iv1350.retailstore.integration.*;
 
 public class Controller {
     private Sale sale;
-    private Printer printer;
-
+    private ExternalInventorySystem externalInventorySystem;
+ 
     public Controller() {
-        this.printer = new Printer();
+        this.externalInventorySystem = new ExternalInventorySystem();
     }
-
+    
     public void startSale() {
         this.sale = new Sale();
     }
 
-    public void printReceipt() {
-        printer.printReceipt(sale.getReceipt());
+    public void scanItem(String itemID, int quantity){
+        ItemDTO item = externalInventorySystem.getItemInfo(itemID);
+        System.out.println(item.toString());
     }
 }

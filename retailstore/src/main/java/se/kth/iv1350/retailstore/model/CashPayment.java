@@ -1,5 +1,31 @@
 package se.kth.iv1350.retailstore.model;
 
+/**
+ * Represents a cash payment made during a sale.
+ * Stores the amount paid and the change to return to the customer.
+ */
 public class CashPayment {
-    private CashPayment cashPayment;
+    // The amount of money paid by the customer
+    private final double paidAmount;
+
+    // The change to be returned to the customer
+    private final double change;
+
+    /**
+     * Creates a new instance representing a cash payment.
+     * @param paidAmount The amount of money paid by the customer.
+     * @param change The amount of change to return to the customer.
+     */
+    public CashPayment(double paidAmount, double change) {
+        this.paidAmount = paidAmount;
+        this.change = change;
+    }
+
+    /**
+     * Gets the amount of money paid by the customer.
+     * @return The paid amount.
+     */
+    public double getPaidAmount() {
+        return paidAmount;
+    }
 }

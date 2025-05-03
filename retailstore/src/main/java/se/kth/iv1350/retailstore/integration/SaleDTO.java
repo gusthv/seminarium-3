@@ -1,18 +1,35 @@
 package se.kth.iv1350.retailstore.integration;
 
-import java.util.List;
+import java.util.ArrayList;
 
-import org.apache.commons.lang3.tuple.Pair;
-
+/**
+ * Represents a Data Transfer Object (DTO) for a sale, encapsulating all the
+ * necessary
+ * information related to a completed or ongoing sale. This includes the list of
+ * items,
+ * total cost, VAT, change, time of sale, and sale status.
+ */
 public class SaleDTO {
-    public final List<Pair<ItemDTO, Integer>> itemsList;
-    public final double totalCost;
-    public final double totalVAT;
-    public final double change;
-    public final java.time.LocalTime timeOfSale;
-    public final boolean isComplete;
+    public final ArrayList itemsList; // List containing alternating ItemDTO IDs and quantities
+    public final double totalCost; // Total cost of the sale excluding change
+    public final double totalVAT; // Total VAT for the sale
+    public final double change; // The calculated change after payment
+    public final java.time.LocalTime timeOfSale; // The time when the sale was made
+    public final boolean isComplete; // Whether the sale is finalized
 
-    public SaleDTO(List<Pair<ItemDTO, Integer>> itemsList, double totalCost, double totalVAT, double change, java.time.LocalTime timeOfSale, boolean isComplete) {
+    /**
+     * Creates a new SaleDTO object with all relevant sale data.
+     *
+     * @param itemsList  List of items and their quantities, alternating [itemID,
+     *                   quantity, ...].
+     * @param totalCost  Total cost of all items including VAT.
+     * @param totalVAT   Total value-added tax for the sale.
+     * @param change     Change to return to the customer.
+     * @param timeOfSale The time at which the sale occurred.
+     * @param isComplete Flag indicating whether the sale is finalized.
+     */
+    public SaleDTO(ArrayList itemsList, double totalCost, double totalVAT, double change,
+            java.time.LocalTime timeOfSale, boolean isComplete) {
         this.itemsList = itemsList;
         this.totalCost = totalCost;
         this.totalVAT = totalVAT;
@@ -21,35 +38,70 @@ public class SaleDTO {
         this.isComplete = isComplete;
     }
 
-    public List<Pair<ItemDTO, Integer>> itemsList() {
+    /**
+     * Gets the list of items and their quantities.
+     * 
+     * @return A list of itemID and quantity pairs.
+     */
+    public ArrayList itemsList() {
         return itemsList;
     }
+
+    /**
+     * Gets the total cost of the sale.
+     * 
+     * @return Total cost.
+     */
     public double totalCost() {
         return totalCost;
     }
+
+    /**
+     * Gets the total VAT of the sale.
+     * 
+     * @return Total VAT.
+     */
     public double totalVAT() {
-        return totalCost;
+        return totalVAT;
     }
+
+    /**
+     * Gets the change to be returned to the customer.
+     * 
+     * @return Change amount.
+     */
     public double change() {
-        return totalCost;
+        return change;
     }
+
+    /**
+     * Gets the time when the sale occurred.
+     * 
+     * @return Sale time.
+     */
     public java.time.LocalTime timeOfSale() {
         return timeOfSale;
     }
+
+    /**
+     * Indicates whether the sale is complete.
+     * 
+     * @return true if the sale is complete, false otherwise.
+     */
     public boolean isComplete() {
         return isComplete;
     }
 
+    /**
+     * Returns a string representation of the sale data.
+     * 
+     * @return A formatted string with all sale fields.
+     */
     public String toString() {
-        StringBuilder sb = new StringBuilder("itemsList:\n");
-        for (Pair<ItemDTO, Integer> pair : itemsList) {
-            sb.append(pair.getLeft()).append(", quantity: ").append(pair.getRight()).append("\n");
-        }
-        sb.append("tatalCost: ").append(totalCost)
-          .append("\ntotalVAT: ").append(totalVAT)
-          .append("\nvhange: ").append(change)
-          .append("\ntimeOfSale: ").append(timeOfSale)
-          .append("\nisComplete: ").append(isComplete);
-        return sb.toString();
+        return ("\nitemsList: " + itemsList +
+                "\ntotalCost: " + totalCost +
+                "\ntotalVAT: " + totalVAT +
+                "\nchange: " + change +
+                "\nisComplete: " + isComplete);
     }
 }

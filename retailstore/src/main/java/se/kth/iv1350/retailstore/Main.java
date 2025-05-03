@@ -1,9 +1,8 @@
 package se.kth.iv1350.retailstore;
 
 import se.kth.iv1350.retailstore.controller.Controller;
-
-import se.kth.iv1350.retailstore.view.View;
 import se.kth.iv1350.retailstore.integration.SaleDTO;
+import se.kth.iv1350.retailstore.view.View;
 
 public class Main {
     public static void main(String[] args) {

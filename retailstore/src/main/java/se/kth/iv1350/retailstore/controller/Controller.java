@@ -1,11 +1,16 @@
 package se.kth.iv1350.retailstore.controller;
 
-import se.kth.iv1350.retailstore.model.*;
-import se.kth.iv1350.retailstore.integration.*;
-
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
+
+import se.kth.iv1350.retailstore.integration.ExternalAccountingSystem;
+import se.kth.iv1350.retailstore.integration.ExternalInventorySystem;
+import se.kth.iv1350.retailstore.integration.ItemDTO;
+import se.kth.iv1350.retailstore.integration.Printer;
+import se.kth.iv1350.retailstore.integration.SaleDTO;
+import se.kth.iv1350.retailstore.model.CashPayment;
+import se.kth.iv1350.retailstore.model.CashRegister;
+import se.kth.iv1350.retailstore.model.Receipt;
+import se.kth.iv1350.retailstore.model.Sale;
 
 /**
  * The controller class handles communication between the view and the model.
@@ -15,10 +20,10 @@ import java.util.List;
 public class Controller {
     private SaleDTO saleDTO;
     private Sale sale;
-    private ExternalInventorySystem externalInventorySystem;
-    private ExternalAccountingSystem externalAccountingSystem;
-    private CashRegister cashRegister;
-    //private ItemDTO itemDTO;
+    private final ExternalInventorySystem externalInventorySystem;
+    private final ExternalAccountingSystem externalAccountingSystem;
+    private final CashRegister cashRegister;
+    private final Printer printer;
  
      /**
      * Creates a new instance of Controller and initializes all external systems.
@@ -27,7 +32,7 @@ public class Controller {
         this.externalInventorySystem = new ExternalInventorySystem();
         this.cashRegister = new CashRegister();
         this.externalAccountingSystem = new ExternalAccountingSystem();
-        //this.itemDTO = itemDTO;
+        this.printer = new Printer();
     }
     
     /**
@@ -80,6 +85,7 @@ public class Controller {
      */
     public Receipt getReceipt(){
         Receipt receipt = sale.getReceipt();
+        printer.printReceipt(receipt.toString());
         return receipt;
     }
 }

@@ -28,4 +28,12 @@ public class CashPayment {
     public double getPaidAmount() {
         return paidAmount;
     }
+
+    /**
+     * Gets the amount of change in the payment.
+     * @return The change amount.
+     */
+    public double getChangeAmount() {
+        return change;
+    }
 }

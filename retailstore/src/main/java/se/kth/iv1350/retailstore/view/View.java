@@ -1,8 +1,9 @@
 package se.kth.iv1350.retailstore.view;
 
 import se.kth.iv1350.retailstore.controller.Controller;
-import se.kth.iv1350.retailstore.integration.*;
-import se.kth.iv1350.retailstore.model.*;
+import se.kth.iv1350.retailstore.integration.ItemDTO;
+import se.kth.iv1350.retailstore.integration.SaleDTO;
+import se.kth.iv1350.retailstore.model.Receipt;
 
 /**
  * This class represents the view of the application.
@@ -36,7 +37,7 @@ public class View {
      */
     public ItemDTO scanItem(String itemID, int quantity){
         ItemDTO itemDTO = this.controller.scanItem(itemID, quantity);
-        System.out.println("Add 1 item with item id " + itemID + ":\n");
+        System.out.println("\nAdd " + quantity + " item(s) with item id " + itemID + ":");
         System.out.println(itemDTO.toString());
         return itemDTO;
     }
@@ -64,7 +65,6 @@ public class View {
      */
     public String printReceipt(){
         Receipt receipt = controller.getReceipt();
-        System.out.println(receipt.toString());
         return receipt.toString();
     }
 }

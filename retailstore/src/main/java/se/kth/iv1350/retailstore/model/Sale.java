@@ -2,10 +2,10 @@ package se.kth.iv1350.retailstore.model;
 
 import java.util.ArrayList;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
-import se.kth.iv1350.retailstore.integration.*;
+import se.kth.iv1350.retailstore.integration.ExternalAccountingSystem;
+import se.kth.iv1350.retailstore.integration.ExternalInventorySystem;
+import se.kth.iv1350.retailstore.integration.ItemDTO;
+import se.kth.iv1350.retailstore.integration.SaleDTO;
 
 /**
  * Represents an ongoing or completed sale. Handles all logic for
@@ -13,10 +13,10 @@ import se.kth.iv1350.retailstore.integration.*;
  */
 public class Sale {
     private SaleDTO saleDTO; // Data Transfer Object holding sale data
-    private CashRegister cashRegister; // Reference to the store's cash register
-    private ExternalAccountingSystem externalAccountingSystem; // System to log accounting info
+    private final CashRegister cashRegister; // Reference to the store's cash register
+    private final ExternalAccountingSystem externalAccountingSystem; // System to log accounting info
     private CashPayment cashPayment; // Represents payment made
-    private ExternalInventorySystem externalInventorySystem; // System for looking up item info
+    private final ExternalInventorySystem externalInventorySystem; // System for looking up item info
     //private ItemDTO itemDTO; // Stores the last scanned item
 
     /**
@@ -32,7 +32,6 @@ public class Sale {
         this.externalAccountingSystem = externalAccountingSystem;
         this.cashRegister = cashRegister;
         this.externalInventorySystem = externalInventorySystem;
-        //this.itemDTO = itemDTO;
     }
 
     /**

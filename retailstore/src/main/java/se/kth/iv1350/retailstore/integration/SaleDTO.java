@@ -41,7 +41,7 @@ public class SaleDTO {
     /**
      * Gets the list of items and their quantities.
      * 
-     * @return A list of itemID and quantity pairs.
+     * @return A list of itemID and quantity indexed at i and i + 1 respectively.
      */
     public ArrayList itemsList() {
         return itemsList;
@@ -90,18 +90,5 @@ public class SaleDTO {
      */
     public boolean isComplete() {
         return isComplete;
-    }
-
-    /**
-     * Returns a string representation of the sale data.
-     * 
-     * @return A formatted string with all sale fields.
-     */
-    public String toString() {
-        return ("\nitemsList: " + itemsList +
-                "\ntotalCost: " + totalCost +
-                "\ntotalVAT: " + totalVAT +
-                "\nchange: " + change +
-                "\nisComplete: " + isComplete);
     }
 }

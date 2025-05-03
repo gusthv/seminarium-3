@@ -81,6 +81,6 @@ public class ItemDTO {
      * @return A string containing the item's ID, name, price, VAT, and description.
      */
     public String toString() {
-        return("\nItem ID: " + itemID + "\nItem name: " + itemName + "\nItem cost: " + itemPrice + " SEK" + "\nVAT: " + itemVAT * 100 + "%" + "\nItem description: " + itemInfo);
+        return("Item ID: " + itemID + "\nItem name: " + itemName + "\nItem cost: " + itemPrice + " SEK" + "\nVAT: " + itemVAT * 100 + "%" + "\nItem description: " + itemInfo);
     }
 }

@@ -1,8 +1,8 @@
 package se.kth.iv1350.retailstore.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class CashRegisterTest {
     private CashRegister cashRegister;
@@ -59,8 +59,6 @@ public class CashRegisterTest {
 
     @Test
     public void testAddNegativePayment() {
-        // This test depends on whether you want to allow negative payments
-        // Currently the code will allow it, but you might want to add validation
         double initialAmount = cashRegister.getAmountInRegister();
         double negativeAmount = -50.0;
         CashPayment negativePayment = new CashPayment(negativeAmount, 0);
@@ -69,12 +67,11 @@ public class CashRegisterTest {
 
         double expectedAmount = initialAmount + negativeAmount;
         assertEquals(expectedAmount, cashRegister.getAmountInRegister(),
-                "Cash register should handle negative payments (if allowed)");
+                "Cash register can handle negative payments");
     }
 
     @Test
     public void testGetAmountInRegister() {
-        // Verify that getter returns the correct value after modifications
         double paymentAmount = 123.45;
         CashPayment payment = new CashPayment(paymentAmount, 0);
         cashRegister.addPayment(payment);
@@ -85,7 +82,6 @@ public class CashRegisterTest {
 
     @Test
     public void testPrecisionHandling() {
-        // Test handling of floating point precision
         double payment1 = 0.1;
         double payment2 = 0.2;
         CashPayment paymentObj1 = new CashPayment(payment1, 0);

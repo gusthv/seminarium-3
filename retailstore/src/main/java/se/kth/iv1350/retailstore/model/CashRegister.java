@@ -1,7 +1,5 @@
 package se.kth.iv1350.retailstore.model;
 
-import se.kth.iv1350.retailstore.model.*;
-
 /**
  * Represents the store's cash register.
  * Keeps track of the total amount of money collected during sales.

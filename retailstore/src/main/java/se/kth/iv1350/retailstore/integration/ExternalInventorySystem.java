@@ -1,7 +1,5 @@
 package se.kth.iv1350.retailstore.integration;
 
-import se.kth.iv1350.retailstore.integration.ItemDTO;
-
 import java.util.HashMap;
 import java.util.Map;
 

@@ -1,5 +1,5 @@
 package se.kth.iv1350.retailstore.integration;
-import se.kth.iv1350.retailstore.model.*;
+import se.kth.iv1350.retailstore.model.CashPayment;
 
 /**
  * Represents the external system that receives sale information. The method <code>sendSaleInformation</code> takes 

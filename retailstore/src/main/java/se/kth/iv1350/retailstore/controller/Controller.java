@@ -23,11 +23,11 @@ public class Controller {
      /**
      * Creates a new instance of Controller and initializes all external systems.
      */
-    public Controller() {
-        this.externalInventorySystem = new ExternalInventorySystem();
-        this.cashRegister = new CashRegister();
-        this.externalAccountingSystem = new ExternalAccountingSystem();
-        this.printer = new Printer();
+    public Controller(ExternalInventorySystem externalInventorySystem, CashRegister cashRegister, ExternalAccountingSystem externalAccountingSystem, Printer printer) {
+        this.externalInventorySystem = externalInventorySystem;
+        this.cashRegister = cashRegister;
+        this.externalAccountingSystem = externalAccountingSystem;
+        this.printer = printer;
     }
     
     /**

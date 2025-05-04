@@ -1,6 +1,5 @@
 package se.kth.iv1350.retailstore.model;
 
-import se.kth.iv1350.retailstore.integration.ExternalInventorySystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,7 +36,7 @@ public class ReceiptTest {
         sale.addItemToSale(inventory.getItemDTO("1001"), 2);
         sale.addItemToSale(inventory.getItemDTO("1002"), 1);
 
-        // Complete payment (50 SEK for 40 SEK total, and 10 change)
+        // Complete payment (50 SEK for 40 SEK total, a)
         sale.pay(new CashPayment(50.00, 0));
 
         // Get the receipt
@@ -55,6 +54,7 @@ public class ReceiptTest {
 
     @Test
     public void testContainsCorrectTotals() {
+        String receiptText = receipt.toString();
         // Verify calculations using inventory prices
         assertTrue(receiptText.contains("40,00")); // total (5 * 2 + 30)
         assertTrue(receiptText.contains("2.4")); // VAT
@@ -62,18 +62,20 @@ public class ReceiptTest {
         assertTrue(receiptText.contains("10,00")); // change
     }
 
-    @Test
-    public void testSingleItemReceipt() {
-        ArrayList<Object> singleItem = new ArrayList<>();
-        singleItem.add("1003"); // gräddfil
-        singleItem.add(1);
+@Test
+public void testSingleItemReceipt() {
+    ArrayList<Object> singleItem = new ArrayList<>();
+    singleItem.add("1003"); // gräddfil
+    singleItem.add(1);
 
-        double price = inventory.getItemDTO("1003").getItemPrice();
-        SaleDTO sale = new SaleDTO(singleItem, price, price * 0.06, 0, LocalDateTime.now(), true);
-        Receipt singleReceipt = new Receipt(sale, new CashPayment(price, 0), inventory);
+    double price = inventory.getItemDTO("1003").getItemPrice();
+    SaleDTO sale = new SaleDTO(singleItem, price, price * 0.06, 0, LocalDateTime.now(), true);
+    Receipt singleReceipt = new Receipt(sale, new CashPayment(price, 0), inventory);
 
-        String receiptText = singleReceipt.toString();
-        assertTrue(receiptText.contains("gräddfil"));
-        assertTrue(receiptText.contains("25,00")); // price from inventory
-    }
+    String receiptText = singleReceipt.toString();
+
+    assertTrue(receiptText.contains("gräddfil"));
+    assertTrue(receiptText.contains("25,00"));
+}
+
 }

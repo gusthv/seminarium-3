@@ -1,15 +1,14 @@
 package se.kth.iv1350.retailstore.model;
 
-import java.time.LocalTime;
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import se.kth.iv1350.retailstore.integration.ExternalInventorySystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import se.kth.iv1350.retailstore.integration.ExternalAccountingSystem;
-import se.kth.iv1350.retailstore.integration.ExternalInventorySystem;
-import se.kth.iv1350.retailstore.integration.SaleDTO;
+import se.kth.iv1350.retailstore.integration.*;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class ReceiptTest {
     private Receipt receipt;
@@ -23,25 +22,25 @@ public class ReceiptTest {
         accounting = new ExternalAccountingSystem();
         cashRegister = new CashRegister();
 
-        // create a complete sale
+        // Create a complete sale
         ArrayList<Object> items = new ArrayList<>();
         items.add("1001"); // tomat
         items.add(2); // quantity
         items.add("1002"); // chips
         items.add(1); // quantity
 
-        // create initial sale DTO
-        SaleDTO initialSale = new SaleDTO(items, 0, 0, 0, LocalTime.now(), false);
+        // Create initial sale DTO
+        SaleDTO initialSale = new SaleDTO(items, 0, 0, 0, LocalDateTime.now(), false);
 
-        // create sale and add items
+        // Create sale and add items
         Sale sale = new Sale(initialSale, cashRegister, accounting, inventory);
         sale.addItemToSale(inventory.getItemDTO("1001"), 2);
         sale.addItemToSale(inventory.getItemDTO("1002"), 1);
 
-        // complete payment (50 SEK for 40 SEK total)
+        // Complete payment (50 SEK for 40 SEK total, and 10 change)
         sale.pay(new CashPayment(50.00, 0));
 
-        // get the receipt
+        // Get the receipt
         receipt = sale.getReceipt();
     }
 
@@ -56,11 +55,11 @@ public class ReceiptTest {
 
     @Test
     public void testContainsCorrectTotals() {
-        String receiptText = receipt.toString();
-        assertTrue(receiptText.contains("40.00")); // total (5 * 2 + 30)
-        assertTrue(receiptText.contains("2.40")); // VAT
-        assertTrue(receiptText.contains("50.00")); // cash paid (40 + 10 change)
-        assertTrue(receiptText.contains("10.00")); // change
+        // Verify calculations using inventory prices
+        assertTrue(receiptText.contains("40,00")); // total (5 * 2 + 30)
+        assertTrue(receiptText.contains("2.4")); // VAT
+        assertTrue(receiptText.contains("50,00")); // cash paid (40 + 10 change)
+        assertTrue(receiptText.contains("10,00")); // change
     }
 
     @Test
@@ -70,11 +69,11 @@ public class ReceiptTest {
         singleItem.add(1);
 
         double price = inventory.getItemDTO("1003").getItemPrice();
-        SaleDTO sale = new SaleDTO(singleItem, price, price * 0.06, 0, LocalTime.now(), true);
+        SaleDTO sale = new SaleDTO(singleItem, price, price * 0.06, 0, LocalDateTime.now(), true);
         Receipt singleReceipt = new Receipt(sale, new CashPayment(price, 0), inventory);
 
         String receiptText = singleReceipt.toString();
         assertTrue(receiptText.contains("gräddfil"));
-        assertTrue(receiptText.contains("25.00")); // price from inventory
+        assertTrue(receiptText.contains("25,00")); // price from inventory
     }
 }

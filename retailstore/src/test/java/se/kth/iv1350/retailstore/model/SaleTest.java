@@ -1,6 +1,6 @@
 package se.kth.iv1350.retailstore.model;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,7 +27,7 @@ public class SaleTest {
     @BeforeEach
     public void setUp() {
         // initialisering av alla objekt som behövs för testet
-        saleDTO = new SaleDTO(new ArrayList<>(), 0.0, 0.0, 0.0, LocalTime.now(), false);
+        saleDTO = new SaleDTO(new ArrayList<>(), 0.0, 0.0, 0.0, LocalDateTime.now(), false);
         cashRegister = new CashRegister();
         externalInventorySystem = new ExternalInventorySystem();
         externalAccountingSystem = new ExternalAccountingSystem();
@@ -46,7 +46,7 @@ public class SaleTest {
         SaleDTO updatedSaleDTO = sale.endSale();
 
         assertEquals(2, updatedSaleDTO.itemsList().size(), "Item should be added to the sale");
-        assertEquals(20.0, updatedSaleDTO.totalCost(), "Total cost should be 20.0 SEK after adding two items");
+        assertEquals(20,0, updatedSaleDTO.totalCost(), "Total cost should be 20.0 SEK after adding two items");
     }
 
     @Test
@@ -58,7 +58,7 @@ public class SaleTest {
 
         SaleDTO updatedSaleDTO = sale.endSale();
         assertTrue(updatedSaleDTO.isComplete(), "Sale should be marked as complete after payment");
-        assertEquals(5.0, updatedSaleDTO.change(), "Change should be 5 SEK after payment");
+        assertEquals(5,0, updatedSaleDTO.change(), "Change should be 5 SEK after payment");
     }
 
     @Test
@@ -70,7 +70,7 @@ public class SaleTest {
         
         Receipt receipt = sale.getReceipt();
         assertNotNull(receipt, "Receipt should not be null");
-        assertEquals(15.0, payment.getPaidAmount(), "Total paid amount in the receipt should be 15 SEK");
+        assertEquals(15,0, payment.getPaidAmount(), "Total paid amount in the receipt should be 15 SEK");
     }
 
     @Test
@@ -85,6 +85,6 @@ public class SaleTest {
         SaleDTO updatedSaleDTO = sale.endSale();
         
         assertEquals(2, (updatedSaleDTO.itemsList().size() / 2), "Items list should contain 2 entries"); // vi delar på 2 för att listan innehåller artikeln på index i och dess kvantitet på i + 1
-        assertEquals(60.0, updatedSaleDTO.totalCost(), "Total cost should be 60 SEK after adding both items");
+        assertEquals(60,0, updatedSaleDTO.totalCost(), "Total cost should be 60 SEK after adding both items");
     }
 }

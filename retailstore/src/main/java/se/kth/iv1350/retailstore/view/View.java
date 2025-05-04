@@ -61,9 +61,10 @@ public class View {
 
     /**
      * Retrieves and prints the receipt.
+     * 
      * @return A string representing the printed receipt.
      */
-    public String printReceipt(){
+    public String printReceipt() {
         Receipt receipt = controller.getReceipt();
         return receipt.toString();
     }

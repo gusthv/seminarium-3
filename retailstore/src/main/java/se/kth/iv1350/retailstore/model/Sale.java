@@ -2,10 +2,10 @@ package se.kth.iv1350.retailstore.model;
 
 import java.util.ArrayList;
 
-import se.kth.iv1350.retailstore.integration.ExternalAccountingSystem;
-import se.kth.iv1350.retailstore.integration.ExternalInventorySystem;
-import se.kth.iv1350.retailstore.integration.ItemDTO;
-import se.kth.iv1350.retailstore.integration.SaleDTO;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
+import se.kth.iv1350.retailstore.integration.*;
 
 /**
  * Represents an ongoing or completed sale. Handles all logic for
@@ -13,17 +13,15 @@ import se.kth.iv1350.retailstore.integration.SaleDTO;
  */
 public class Sale {
     private SaleDTO saleDTO; // Data Transfer Object holding sale data
-    private final CashRegister cashRegister; // Reference to the store's cash register
-    private final ExternalAccountingSystem externalAccountingSystem; // System to log accounting info
+    private CashRegister cashRegister; // Reference to the store's cash register
+    private ExternalAccountingSystem externalAccountingSystem; // System to log accounting info
     private CashPayment cashPayment; // Represents payment made
-    private final ExternalInventorySystem externalInventorySystem; // System for looking up item info
-    //private ItemDTO itemDTO; // Stores the last scanned item
+    private ExternalInventorySystem externalInventorySystem; // System for looking up item info
 
     /**
      * Creates a new sale with provided dependencies and initial sale data.
      * @param saleDTO Contains the state of the current sale.
      * @param cashRegister Reference to the cash register.
-     * @param itemDTO The most recently scanned item (optional use).
      * @param externalAccountingSystem Reference to accounting system.
      * @param externalInventorySystem Reference to inventory system.
      */
@@ -76,7 +74,8 @@ public class Sale {
      * @param isComplete Whether the sale is completed.
      * @return A new SaleDTO instance.
      */
-    public SaleDTO createSaleDTO(ArrayList itemsList, double totalCost, double totalVAT, double change, java.time.LocalTime timeOfSale, boolean isComplete){
+    
+    public SaleDTO createSaleDTO(ArrayList itemsList, double totalCost, double totalVAT, double change, java.time.LocalDateTime timeOfSale, boolean isComplete){
         return new SaleDTO(
             itemsList,
             totalCost,
@@ -95,7 +94,6 @@ public class Sale {
      * @return Updated SaleDTO after the item is added.
      */
     public SaleDTO addItemToSale(ItemDTO itemDTO, int quantity) {
-        //this.itemDTO = itemDTO;
         final ArrayList itemsList = new ArrayList(saleDTO.itemsList());
 
         // Calculate total cost and VAT
@@ -107,12 +105,12 @@ public class Sale {
         double currentItemVAT = itemDTO.getItemVAT() * currentItemCost;
         double newCurrentTotalVAT = currentTotalVAT + currentItemVAT;
 
-        // Check if item already exists in list and update quantity if so
+        // Loopa igenom itemsList där varje udda index innehåller antal (quantity) och varje jämnt index innehåller ett itemID. Vi stegar med 2 eftersom varje varupost består av två på varandra följande element: itemID (i) och quantity (i+1).
         for (int i = 0; i < itemsList.size(); i += 2){
             int oldQuantity = (int) itemsList.get(i + 1);
             if (itemDTO.getItemID().equals(itemsList.get(i))) {
                 itemsList.set(i + 1, oldQuantity + quantity);
-                this.saleDTO = createSaleDTO(itemsList, newCurrentTotalCost, newCurrentTotalVAT, 0.0, java.time.LocalTime.now(), false);
+                this.saleDTO = createSaleDTO(itemsList, newCurrentTotalCost, newCurrentTotalVAT, 0.0, java.time.LocalDateTime.now(), false);
                 return this.saleDTO;
             }
         }
@@ -120,7 +118,7 @@ public class Sale {
         // Add new item if not found
         itemsList.add(itemDTO.getItemID());
         itemsList.add(quantity);
-        this.saleDTO = createSaleDTO(itemsList, newCurrentTotalCost, newCurrentTotalVAT, 0.0, java.time.LocalTime.now(), false);
+        this.saleDTO = createSaleDTO(itemsList, newCurrentTotalCost, newCurrentTotalVAT, 0.0, java.time.LocalDateTime.now(), false);
         return this.saleDTO;
     }
 
@@ -139,5 +137,4 @@ public class Sale {
     public Receipt getReceipt() {
         return new Receipt(this.saleDTO, this.cashPayment, this.externalInventorySystem);
     }
-
 }

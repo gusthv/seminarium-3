@@ -1,16 +1,11 @@
 package se.kth.iv1350.retailstore.controller;
 
-import java.util.ArrayList;
+import se.kth.iv1350.retailstore.model.*;
+import se.kth.iv1350.retailstore.integration.*;
 
-import se.kth.iv1350.retailstore.integration.ExternalAccountingSystem;
-import se.kth.iv1350.retailstore.integration.ExternalInventorySystem;
-import se.kth.iv1350.retailstore.integration.ItemDTO;
-import se.kth.iv1350.retailstore.integration.Printer;
-import se.kth.iv1350.retailstore.integration.SaleDTO;
-import se.kth.iv1350.retailstore.model.CashPayment;
-import se.kth.iv1350.retailstore.model.CashRegister;
-import se.kth.iv1350.retailstore.model.Receipt;
-import se.kth.iv1350.retailstore.model.Sale;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The controller class handles communication between the view and the model.
@@ -20,10 +15,10 @@ import se.kth.iv1350.retailstore.model.Sale;
 public class Controller {
     private SaleDTO saleDTO;
     private Sale sale;
-    private final ExternalInventorySystem externalInventorySystem;
-    private final ExternalAccountingSystem externalAccountingSystem;
-    private final CashRegister cashRegister;
-    private final Printer printer;
+    private ExternalInventorySystem externalInventorySystem;
+    private ExternalAccountingSystem externalAccountingSystem;
+    private CashRegister cashRegister;
+    private Printer printer;
  
      /**
      * Creates a new instance of Controller and initializes all external systems.
@@ -43,7 +38,7 @@ public class Controller {
             0.0,
             0.0,
             0.0,
-            java.time.LocalTime.now(),
+            java.time.LocalDateTime.now(),
             false);
         this.sale = new Sale(this.saleDTO, this.cashRegister, this.externalAccountingSystem, this.externalInventorySystem);
     }
@@ -81,9 +76,10 @@ public class Controller {
 
     /**
      * Retrieves the receipt for the completed sale.
+     * 
      * @return A {@link Receipt} representing the transaction.
      */
-    public Receipt getReceipt(){
+    public Receipt getReceipt() {
         Receipt receipt = sale.getReceipt();
         printer.printReceipt(receipt.toString());
         return receipt;

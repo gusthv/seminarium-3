@@ -14,7 +14,7 @@ public class SaleDTO {
     public final double totalCost; // Total cost of the sale excluding change
     public final double totalVAT; // Total VAT for the sale
     public final double change; // The calculated change after payment
-    public final java.time.LocalTime timeOfSale; // The time when the sale was made
+    public final java.time.LocalDateTime timeOfSale; // The time when the sale was made
     public final boolean isComplete; // Whether the sale is finalized
 
     /**
@@ -29,7 +29,7 @@ public class SaleDTO {
      * @param isComplete Flag indicating whether the sale is finalized.
      */
     public SaleDTO(ArrayList itemsList, double totalCost, double totalVAT, double change,
-            java.time.LocalTime timeOfSale, boolean isComplete) {
+            java.time.LocalDateTime timeOfSale, boolean isComplete) {
         this.itemsList = itemsList;
         this.totalCost = totalCost;
         this.totalVAT = totalVAT;
@@ -79,7 +79,7 @@ public class SaleDTO {
      * 
      * @return Sale time.
      */
-    public java.time.LocalTime timeOfSale() {
+    public java.time.LocalDateTime timeOfSale() {
         return timeOfSale;
     }
 

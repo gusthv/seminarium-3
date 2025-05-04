@@ -2,7 +2,7 @@ package se.kth.iv1350.retailstore.integration;
 
 /**
  * Represents a Data Transfer Object (DTO) for an item in the retail system.
- * This class holds all relevant data about an item such as its ID, name, price,
+ * This class holds all data about an item such as its ID, name, price,
  * VAT, and description.
  */
 public class ItemDTO {

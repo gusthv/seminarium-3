@@ -2,21 +2,21 @@ package se.kth.iv1350.retailstore.model;
 
 import java.util.ArrayList;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
-import se.kth.iv1350.retailstore.integration.*;
+import se.kth.iv1350.retailstore.integration.ExternalAccountingSystem;
+import se.kth.iv1350.retailstore.integration.ExternalInventorySystem;
+import se.kth.iv1350.retailstore.integration.ItemDTO;
+import se.kth.iv1350.retailstore.integration.SaleDTO;
 
 /**
  * Represents an ongoing or completed sale. Handles all logic for
  * adding items, calculating totals, handling payment, and generating a receipt.
  */
 public class Sale {
-    private SaleDTO saleDTO; // Data Transfer Object holding sale data
-    private CashRegister cashRegister; // Reference to the store's cash register
-    private ExternalAccountingSystem externalAccountingSystem; // System to log accounting info
-    private CashPayment cashPayment; // Represents payment made
-    private ExternalInventorySystem externalInventorySystem; // System for looking up item info
+    private SaleDTO saleDTO;
+    private final CashRegister cashRegister;
+    private final ExternalAccountingSystem externalAccountingSystem;
+    private CashPayment cashPayment;
+    private final ExternalInventorySystem externalInventorySystem;
 
     /**
      * Creates a new sale with provided dependencies and initial sale data.
@@ -87,16 +87,21 @@ public class Sale {
     }
 
     /**
-     * Adds an item and quantity to the sale. If the item already exists,
-     * increases the quantity instead.
-     * @param itemDTO The item to add.
-     * @param quantity The quantity of the item.
-     * @return Updated SaleDTO after the item is added.
-     */
+ * Adds an item and quantity to the sale. If the item already exists,
+ * increases the quantity instead.
+ * <p>
+ * Notera: {@code itemsList} innehåller växelvis itemID och quantity. 
+ * Varje jämnt index innehåller ett itemID, och varje udda index innehåller 
+ * motsvarande antal (quantity). Vi stegar med 2 eftersom varje artikel består 
+ * av två på varandra följande element: itemID (i) och quantity (i+1).
+ *
+ * @param itemDTO The item to add.
+ * @param quantity The quantity of the item.
+ * @return Updated SaleDTO after the item is added.
+ */
     public SaleDTO addItemToSale(ItemDTO itemDTO, int quantity) {
         final ArrayList itemsList = new ArrayList(saleDTO.itemsList());
 
-        // Calculate total cost and VAT
         double currentTotalCost = saleDTO.totalCost();
         double currentItemCost = itemDTO.getItemPrice() * quantity;
         double newCurrentTotalCost = currentTotalCost + currentItemCost;
@@ -105,7 +110,6 @@ public class Sale {
         double currentItemVAT = itemDTO.getItemVAT() * currentItemCost;
         double newCurrentTotalVAT = currentTotalVAT + currentItemVAT;
 
-        // Loopa igenom itemsList där varje udda index innehåller antal (quantity) och varje jämnt index innehåller ett itemID. Vi stegar med 2 eftersom varje varupost består av två på varandra följande element: itemID (i) och quantity (i+1).
         for (int i = 0; i < itemsList.size(); i += 2){
             int oldQuantity = (int) itemsList.get(i + 1);
             if (itemDTO.getItemID().equals(itemsList.get(i))) {
@@ -115,7 +119,6 @@ public class Sale {
             }
         }
 
-        // Add new item if not found
         itemsList.add(itemDTO.getItemID());
         itemsList.add(quantity);
         this.saleDTO = createSaleDTO(itemsList, newCurrentTotalCost, newCurrentTotalVAT, 0.0, java.time.LocalDateTime.now(), false);

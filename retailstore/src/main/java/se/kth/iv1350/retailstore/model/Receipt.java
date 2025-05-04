@@ -1,10 +1,10 @@
 package se.kth.iv1350.retailstore.model;
 
-import se.kth.iv1350.retailstore.integration.*;
-import se.kth.iv1350.retailstore.model.CashPayment;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import se.kth.iv1350.retailstore.integration.ExternalInventorySystem;
+import se.kth.iv1350.retailstore.integration.ItemDTO;
+import se.kth.iv1350.retailstore.integration.SaleDTO;
 
 
 /**
@@ -13,9 +13,9 @@ import java.util.ArrayList;
  * <code>totalVAT</code>, <code>payment</code>, and <code>change</code>.
  */
 public class Receipt {
-    private final SaleDTO saleDTO; // Data Transfer Object containing all sale details
-    private final CashPayment cashPayment; // Object representing the payment details
-    private final ExternalInventorySystem externalInventorySystem; // Used to retrieve item info by item ID
+    private final SaleDTO saleDTO;
+    private final CashPayment cashPayment;
+    private final ExternalInventorySystem externalInventorySystem;
 
     /**
      * Creates a new Receipt instance with all required information to print a complete receipt.

@@ -11,8 +11,7 @@ import se.kth.iv1350.retailstore.model.Receipt;
  * communicates with the controller to perform operations.
  */
 public class View {
-    private Controller controller; // Reference to the controller layer
-    private Receipt receipt; // Holds the generated receipt
+    private Controller controller;
 
     /**
      * Creates a new instance of the View.

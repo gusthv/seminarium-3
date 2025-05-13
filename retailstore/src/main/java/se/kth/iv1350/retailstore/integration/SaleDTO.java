@@ -1,6 +1,10 @@
 package se.kth.iv1350.retailstore.integration;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+
+import se.kth.iv1350.retailstore.model.*;
 
 /**
  * Represents a Data Transfer Object (DTO) for a sale, encapsulating all the
@@ -10,17 +14,17 @@ import java.util.ArrayList;
  * total cost, VAT, change, time of sale, and sale status.
  */
 public class SaleDTO {
-    public final ArrayList itemsList; // List containing alternating ItemDTO IDs and quantities
-    public final double totalCost; // Total cost of the sale excluding change
-    public final double totalVAT; // Total VAT for the sale
-    public final double change; // The calculated change after payment
-    public final java.time.LocalDateTime timeOfSale; // The time when the sale was made
-    public final boolean isComplete; // Whether the sale is finalized
+    private List<ItemAndQuantity> itemsList;
+    public final double totalCost;
+    public final double totalVAT;
+    public final double change;
+    public final java.time.LocalDateTime timeOfSale;
+    public final boolean isComplete;
 
     /**
      * Creates a new SaleDTO object with all relevant sale data.
      *
-     * @param itemsList  List of items and their quantities, alternating [itemID,
+     * @param singleItem  List of items and their quantities, alternating [itemID,
      *                   quantity, ...].
      * @param totalCost  Total cost of all items including VAT.
      * @param totalVAT   Total value-added tax for the sale.
@@ -28,9 +32,10 @@ public class SaleDTO {
      * @param timeOfSale The time at which the sale occurred.
      * @param isComplete Flag indicating whether the sale is finalized.
      */
-    public SaleDTO(ArrayList itemsList, double totalCost, double totalVAT, double change,
+    public SaleDTO(
+            List<ItemAndQuantity> singleItem, double totalCost, double totalVAT, double change,
             java.time.LocalDateTime timeOfSale, boolean isComplete) {
-        this.itemsList = itemsList;
+        this.itemsList = new ArrayList<ItemAndQuantity>(singleItem);
         this.totalCost = totalCost;
         this.totalVAT = totalVAT;
         this.change = change;
@@ -43,8 +48,8 @@ public class SaleDTO {
      * 
      * @return A list of itemID and quantity indexed at i and i + 1 respectively.
      */
-    public ArrayList itemsList() {
-        return itemsList;
+    public List<ItemAndQuantity> itemsList() {
+        return Collections.unmodifiableList(itemsList);
     }
 
     /**

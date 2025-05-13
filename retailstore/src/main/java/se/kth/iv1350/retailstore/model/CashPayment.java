@@ -5,10 +5,7 @@ package se.kth.iv1350.retailstore.model;
  * Stores the amount paid and the change to return to the customer.
  */
 public class CashPayment {
-    // The amount of money paid by the customer
     private final double paidAmount;
-
-    // The change to be returned to the customer
     private final double change;
 
     /**

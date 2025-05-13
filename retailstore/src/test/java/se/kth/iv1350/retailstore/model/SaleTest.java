@@ -45,7 +45,7 @@ public class SaleTest {
         sale.addItemToSale(itemDTO, 2);
         SaleDTO updatedSaleDTO = sale.endSale();
 
-        assertEquals(2, updatedSaleDTO.itemsList().size(), "Item should be added to the sale");
+        assertEquals(1, updatedSaleDTO.itemsList().size(), "Item should be added to the sale");
         assertEquals(20,0, updatedSaleDTO.totalCost(), "Total cost should be 20.0 SEK after adding two items");
     }
 
@@ -84,7 +84,7 @@ public class SaleTest {
         
         SaleDTO updatedSaleDTO = sale.endSale();
         
-        assertEquals(2, (updatedSaleDTO.itemsList().size() / 2), "Items list should contain 2 entries"); // vi delar på 2 för att listan innehåller artikeln på index i och dess kvantitet på i + 1
+        assertEquals(2, (updatedSaleDTO.itemsList().size()), "Items list should contain 2 entries");
         assertEquals(60,0, updatedSaleDTO.totalCost(), "Total cost should be 60 SEK after adding both items");
     }
 }

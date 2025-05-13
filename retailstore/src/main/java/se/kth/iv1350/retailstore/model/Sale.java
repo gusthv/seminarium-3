@@ -1,5 +1,6 @@
 package se.kth.iv1350.retailstore.model;
 
+import java.util.List;
 import java.util.ArrayList;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -12,11 +13,11 @@ import se.kth.iv1350.retailstore.integration.*;
  * adding items, calculating totals, handling payment, and generating a receipt.
  */
 public class Sale {
-    private SaleDTO saleDTO; // Data Transfer Object holding sale data
-    private CashRegister cashRegister; // Reference to the store's cash register
-    private ExternalAccountingSystem externalAccountingSystem; // System to log accounting info
-    private CashPayment cashPayment; // Represents payment made
-    private ExternalInventorySystem externalInventorySystem; // System for looking up item info
+    private SaleDTO saleDTO;
+    private CashRegister cashRegister; 
+    private ExternalAccountingSystem externalAccountingSystem; 
+    private CashPayment cashPayment; 
+    private ExternalInventorySystem externalInventorySystem;
 
     /**
      * Creates a new sale with provided dependencies and initial sale data.
@@ -75,7 +76,7 @@ public class Sale {
      * @return A new SaleDTO instance.
      */
     
-    public SaleDTO createSaleDTO(ArrayList itemsList, double totalCost, double totalVAT, double change, java.time.LocalDateTime timeOfSale, boolean isComplete){
+    public SaleDTO createSaleDTO(List<ItemAndQuantity> itemsList, double totalCost, double totalVAT, double change, java.time.LocalDateTime timeOfSale, boolean isComplete){
         return new SaleDTO(
             itemsList,
             totalCost,
@@ -94,9 +95,8 @@ public class Sale {
      * @return Updated SaleDTO after the item is added.
      */
     public SaleDTO addItemToSale(ItemDTO itemDTO, int quantity) {
-        final ArrayList itemsList = new ArrayList(saleDTO.itemsList());
+        final List<ItemAndQuantity> itemsList = new ArrayList<>(saleDTO.itemsList());
 
-        // Calculate total cost and VAT
         double currentTotalCost = saleDTO.totalCost();
         double currentItemCost = itemDTO.getItemPrice() * quantity;
         double newCurrentTotalCost = currentTotalCost + currentItemCost;
@@ -105,20 +105,19 @@ public class Sale {
         double currentItemVAT = itemDTO.getItemVAT() * currentItemCost;
         double newCurrentTotalVAT = currentTotalVAT + currentItemVAT;
 
-        // Loopa igenom itemsList där varje udda index innehåller antal (quantity) och varje jämnt index innehåller ett itemID. Vi stegar med 2 eftersom varje varupost består av två på varandra följande element: itemID (i) och quantity (i+1).
-        for (int i = 0; i < itemsList.size(); i += 2){
-            int oldQuantity = (int) itemsList.get(i + 1);
-            if (itemDTO.getItemID().equals(itemsList.get(i))) {
-                itemsList.set(i + 1, oldQuantity + quantity);
+        boolean isFound = false;
+
+        for (ItemAndQuantity lineItem : itemsList) {
+            if (itemDTO.getItemID().equals(lineItem.getItem().getItemID())) {
+                lineItem.increaseQuantity(quantity);
                 this.saleDTO = createSaleDTO(itemsList, newCurrentTotalCost, newCurrentTotalVAT, 0.0, java.time.LocalDateTime.now(), false);
-                return this.saleDTO;
+                isFound = true;
             }
         }
-
-        // Add new item if not found
-        itemsList.add(itemDTO.getItemID());
-        itemsList.add(quantity);
-        this.saleDTO = createSaleDTO(itemsList, newCurrentTotalCost, newCurrentTotalVAT, 0.0, java.time.LocalDateTime.now(), false);
+        if (!isFound) {
+            itemsList.add(new ItemAndQuantity(itemDTO, quantity));
+            this.saleDTO = createSaleDTO(itemsList, newCurrentTotalCost, newCurrentTotalVAT, 0.0, java.time.LocalDateTime.now(), false);
+        }
         return this.saleDTO;
     }
 

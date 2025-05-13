@@ -4,8 +4,7 @@ import se.kth.iv1350.retailstore.integration.*;
 import se.kth.iv1350.retailstore.model.CashPayment;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-
+import java.util.List;
 
 /**
  * Represents a printed receipt for a completed sale. The receipt includes
@@ -13,9 +12,9 @@ import java.util.ArrayList;
  * <code>totalVAT</code>, <code>payment</code>, and <code>change</code>.
  */
 public class Receipt {
-    private final SaleDTO saleDTO; // Data Transfer Object containing all sale details
-    private final CashPayment cashPayment; // Object representing the payment details
-    private final ExternalInventorySystem externalInventorySystem; // Used to retrieve item info by item ID
+    private final SaleDTO saleDTO;
+    private final CashPayment cashPayment;
+    private final ExternalInventorySystem externalInventorySystem;
 
     /**
      * Creates a new Receipt instance with all required information to print a complete receipt.
@@ -36,11 +35,11 @@ public class Receipt {
      */
     public String generatedItemList() {
         String myStr = "";
-        ArrayList<Object> itemsList = this.saleDTO.itemsList();
-        for (int i = 0; i < itemsList.size(); i += 2) {
-            String itemID = (String) itemsList.get(i);
-            int quantity = (int) itemsList.get(i + 1);
-            ItemDTO itemDTO = externalInventorySystem.getItemDTO(itemID);
+        List<ItemAndQuantity> itemsList = this.saleDTO.itemsList();
+        for (int i = 0; i < itemsList.size(); i++) {
+            ItemAndQuantity item = itemsList.get(i);
+            ItemDTO itemDTO = item.getItem();
+            int quantity = item.getQuantity();
             myStr += String.format("%-15s %3d x %6.2f  %8.2f SEK\n",
                 itemDTO.getItemName(), quantity, itemDTO.getItemPrice(), (itemDTO.getItemPrice() * quantity));
         }

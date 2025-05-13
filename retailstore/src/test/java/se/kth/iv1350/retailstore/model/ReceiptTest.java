@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import se.kth.iv1350.retailstore.integration.*;
+import se.kth.iv1350.retailstore.model.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,25 +22,15 @@ public class ReceiptTest {
         accounting = new ExternalAccountingSystem();
         cashRegister = new CashRegister();
 
-        // Create a complete sale
-        ArrayList<Object> items = new ArrayList<>();
-        items.add("1001"); // tomat
-        items.add(2); // quantity
-        items.add("1002"); // chips
-        items.add(1); // quantity
-
-        // Create initial sale DTO
+        ArrayList<ItemAndQuantity> items = new ArrayList<ItemAndQuantity>();
         SaleDTO initialSale = new SaleDTO(items, 0, 0, 0, LocalDateTime.now(), false);
 
-        // Create sale and add items
         Sale sale = new Sale(initialSale, cashRegister, accounting, inventory);
         sale.addItemToSale(inventory.getItemDTO("1001"), 2);
         sale.addItemToSale(inventory.getItemDTO("1002"), 1);
 
-        // Complete payment (50 SEK for 40 SEK total, a)
         sale.pay(new CashPayment(50.00, 0));
 
-        // Get the receipt
         receipt = sale.getReceipt();
     }
 
@@ -48,34 +39,34 @@ public class ReceiptTest {
         String receiptText = receipt.toString();
         assertTrue(receiptText.contains("tomat"));
         assertTrue(receiptText.contains("chips"));
-        assertTrue(receiptText.contains("2")); // quantity
-        assertTrue(receiptText.contains("1")); // quantity
+        assertTrue(receiptText.contains("2"));
+        assertTrue(receiptText.contains("1"));
     }
 
     @Test
     public void testContainsCorrectTotals() {
         String receiptText = receipt.toString();
-        // Verify calculations using inventory prices
-        assertTrue(receiptText.contains("40,00")); // total (5 * 2 + 30)
-        assertTrue(receiptText.contains("2.4")); // VAT
-        assertTrue(receiptText.contains("50,00")); // cash paid (40 + 10 change)
-        assertTrue(receiptText.contains("10,00")); // change
+        assertTrue(receiptText.contains("40,00"));
+        assertTrue(receiptText.contains("2.4"));
+        assertTrue(receiptText.contains("50,00"));
+        assertTrue(receiptText.contains("10,00"));
     }
 
-@Test
-public void testSingleItemReceipt() {
-    ArrayList<Object> singleItem = new ArrayList<>();
-    singleItem.add("1003"); // gräddfil
-    singleItem.add(1);
+    @Test
+    public void testSingleItemReceipt() {
+        ArrayList<ItemAndQuantity> singleItem = new ArrayList<>();
+        ItemDTO item = inventory.getItemDTO("1003");
+        singleItem.add(new ItemAndQuantity(item, 1));
 
-    double price = inventory.getItemDTO("1003").getItemPrice();
-    SaleDTO sale = new SaleDTO(singleItem, price, price * 0.06, 0, LocalDateTime.now(), true);
-    Receipt singleReceipt = new Receipt(sale, new CashPayment(price, 0), inventory);
+        double price = item.getItemPrice();
+        double vat = item.getItemVAT() * price;
 
-    String receiptText = singleReceipt.toString();
+        SaleDTO sale = new SaleDTO(singleItem, price, vat, 0, LocalDateTime.now(), true);
+        Receipt singleReceipt = new Receipt(sale, new CashPayment(price, 0), inventory);
 
-    assertTrue(receiptText.contains("gräddfil"));
-    assertTrue(receiptText.contains("25,00"));
-}
+        String receiptText = singleReceipt.toString();
 
+        assertTrue(receiptText.contains("gräddfil"));
+        assertTrue(receiptText.contains("25,00"));
+    }
 }

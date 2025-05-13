@@ -90,7 +90,6 @@ public class CashRegisterTest {
         cashRegister.addPayment(paymentObj1);
         cashRegister.addPayment(paymentObj2);
 
-        // 0.1 + 0.2 should be 0.3, but with floating point it might not be exact
         assertEquals(0.3, cashRegister.getAmountInRegister(), 0.0001,
                 "Cash register should handle floating point precision correctly");
     }

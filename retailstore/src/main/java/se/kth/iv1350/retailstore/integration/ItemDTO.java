@@ -32,7 +32,6 @@ public class ItemDTO {
 
     /**
      * Gets the unique ID of the item.
-     *
      * @return The item's ID.
      */
     public String getItemID() {
@@ -41,7 +40,6 @@ public class ItemDTO {
 
     /**
      * Gets the name of the item.
-     *
      * @return The item's name.
      */
     public String getItemName() {
@@ -50,7 +48,6 @@ public class ItemDTO {
 
     /**
      * Gets the description or additional info of the item.
-     *
      * @return The item's description.
      */
     public String getItemInfo() {
@@ -73,14 +70,5 @@ public class ItemDTO {
      */
     public double getItemVAT() {
         return itemVAT;
-    }
-
-    /**
-     * Returns a formatted string representation of the item for display purposes.
-     *
-     * @return A string containing the item's ID, name, price, VAT, and description.
-     */
-    public String toString() {
-        return("Item ID: " + itemID + "\nItem name: " + itemName + "\nItem cost: " + itemPrice + " SEK" + "\nVAT: " + itemVAT * 100 + "%" + "\nItem description: " + itemInfo);
     }
 }

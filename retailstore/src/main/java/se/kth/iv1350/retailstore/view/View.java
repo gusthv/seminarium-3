@@ -38,7 +38,7 @@ public class View {
     public ItemDTO scanItem(String itemID, int quantity){
         ItemDTO itemDTO = this.controller.scanItem(itemID, quantity);
         System.out.println("\nAdd " + quantity + " item(s) with item id " + itemID + ":");
-        System.out.println(itemDTO.toString());
+        System.out.println(itemToString(itemDTO));
         return itemDTO;
     }
 
@@ -67,5 +67,14 @@ public class View {
     public String printReceipt() {
         Receipt receipt = controller.getReceipt();
         return receipt.toString();
+    }
+    
+    /**
+     * Returns a formatted string representation of the item for display purposes.
+     *
+     * @return A string containing the item's ID, name, price, VAT, and description.
+     */
+    public String itemToString(ItemDTO itemDTO) {
+        return("Item ID: " + itemDTO.getItemID() + "\nItem name: " + itemDTO.getItemName() + "\nItem cost: " + itemDTO.getItemPrice() + " SEK" + "\nVAT: " + itemDTO.getItemVAT() * 100 + "%" + "\nItem description: " + itemDTO.getItemInfo());
     }
 }

@@ -34,7 +34,7 @@ public class Controller {
     * Starts a new sale by initialicing a new {@link SaleDTO} and {@link Sale} instance.
     */
     public void startSale() {
-        this.saleDTO = new SaleDTO(new ArrayList<>(),
+        this.saleDTO = new SaleDTO(new ArrayList<ItemAndQuantity>(),
             0.0,
             0.0,
             0.0,

@@ -18,7 +18,8 @@ public class ReceiptTest {
 
     @BeforeEach
     public void setUp() {
-        inventory = new ExternalInventorySystem();
+        ExternalInventorySystem.resetInstanceForTest();
+        inventory = ExternalInventorySystem.getInstance();
         accounting = new ExternalAccountingSystem();
         cashRegister = new CashRegister();
 

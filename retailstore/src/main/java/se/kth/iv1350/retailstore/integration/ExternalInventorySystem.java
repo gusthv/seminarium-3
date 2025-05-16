@@ -40,6 +40,11 @@ public class ExternalInventorySystem {
         return instance;
     }
 
+    /** FOR TESTING PURPOSES ONLY — resets singleton state */
+    public static void resetInstanceForTest() {
+        instance = null;
+    }
+
     /**
      * Populates the inventory system with predefined <code>ItemDTO</code> objects.
      * These are mock entries for simulation and testing purposes.

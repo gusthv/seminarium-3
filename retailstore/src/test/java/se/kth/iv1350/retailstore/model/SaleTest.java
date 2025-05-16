@@ -26,22 +26,19 @@ public class SaleTest {
     
     @BeforeEach
     public void setUp() {
-        // initialisering av alla objekt som behövs för testet
         saleDTO = new SaleDTO(new ArrayList<>(), 0.0, 0.0, 0.0, LocalDateTime.now(), false);
         cashRegister = new CashRegister();
-        externalInventorySystem = new ExternalInventorySystem();
+        ExternalInventorySystem.resetInstanceForTest();
+        externalInventorySystem = ExternalInventorySystem.getInstance();
         externalAccountingSystem = new ExternalAccountingSystem();
-        
-        // skapar en testartikel
+
         itemDTO = new ItemDTO("123", "Test Item", "This is a test item", 10.0, 0.06);
 
-        // skapar ett nytt försäljningsobjekt
         sale = new Sale(saleDTO, cashRegister, externalAccountingSystem, externalInventorySystem);
     }
 
     @Test
     public void testAddItemToSale() {
-        // testar att lägga till en vara till försäljningen
         sale.addItemToSale(itemDTO, 2);
         SaleDTO updatedSaleDTO = sale.endSale();
 
@@ -51,9 +48,8 @@ public class SaleTest {
 
     @Test
     public void testPay() {
-        // testar betalning
         sale.addItemToSale(itemDTO, 2);
-        CashPayment payment = new CashPayment(25.0, 5.0); // betalning på 25 SEK, förväntad växel 5 SEK
+        CashPayment payment = new CashPayment(25.0, 5.0);
         sale.pay(payment);
 
         SaleDTO updatedSaleDTO = sale.endSale();
@@ -63,9 +59,8 @@ public class SaleTest {
 
     @Test
     public void testGetReceipt() {
-        // testar att generera ett kvitto
         sale.addItemToSale(itemDTO, 1);
-        CashPayment payment = new CashPayment(15.0, 5.0); // betalning på 15 SEK, växel 5 SEK
+        CashPayment payment = new CashPayment(15.0, 5.0);
         sale.pay(payment);
         
         Receipt receipt = sale.getReceipt();
@@ -75,12 +70,11 @@ public class SaleTest {
 
     @Test
     public void testSaleWithMultipleItems() {
-        // testar försäljning med flera artiklar
         ItemDTO anotherItem1 = new ItemDTO("101", "Another Item1", "Another test item", 15.0, 0.06);
         ItemDTO anotherItem2 = new ItemDTO("102", "Another Item2", "Another test item", 15.0, 0.06);
         
-        sale.addItemToSale(anotherItem1, 2); // lägg till en artikel
-        sale.addItemToSale(anotherItem2, 2); // lägg till en andra artikel
+        sale.addItemToSale(anotherItem1, 2);
+        sale.addItemToSale(anotherItem2, 2);
         
         SaleDTO updatedSaleDTO = sale.endSale();
         

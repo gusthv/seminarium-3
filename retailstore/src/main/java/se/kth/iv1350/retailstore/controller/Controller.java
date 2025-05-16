@@ -73,7 +73,7 @@ public class Controller {
         }
         catch (ItemNotFoundException | InventoryErrorException e) {
             errorManager.notifyError(e);
-            return null;
+            throw e;
         }
     }
 

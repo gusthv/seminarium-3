@@ -1,8 +1,5 @@
 package se.kth.iv1350.retailstore.integration;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.*;
 import se.kth.iv1350.retailstore.util.error.InventoryErrorException;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +10,8 @@ class ExternalInventorySystemTest {
 
     @BeforeEach
     void setUp() {
-        inventorySystem = new ExternalInventorySystem();
+        ExternalInventorySystem.resetInstanceForTest();
+        inventorySystem = ExternalInventorySystem.getInstance();
     }
 
     @Test

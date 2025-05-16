@@ -19,7 +19,8 @@ public class ControllerTest {
 
 @BeforeEach
 public void setUp() {
-    ExternalInventorySystem inventory = new ExternalInventorySystem();
+    ExternalInventorySystem.resetInstanceForTest();
+    ExternalInventorySystem inventory = ExternalInventorySystem.getInstance();
     CashRegister cashRegister = new CashRegister();
     ExternalAccountingSystem accounting = new ExternalAccountingSystem();
     Printer printer = new Printer();

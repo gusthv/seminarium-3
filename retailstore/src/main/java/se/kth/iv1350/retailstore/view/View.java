@@ -4,15 +4,16 @@ import se.kth.iv1350.retailstore.controller.Controller;
 import se.kth.iv1350.retailstore.integration.ItemDTO;
 import se.kth.iv1350.retailstore.integration.SaleDTO;
 import se.kth.iv1350.retailstore.model.Receipt;
+import se.kth.iv1350.retailstore.util.error.*;
 
 /**
  * This class represents the view of the application.
  * It simulates interaction with a cashier/user interface and
  * communicates with the controller to perform operations.
  */
-public class View {
-    private Controller controller; // Reference to the controller layer
-    private Receipt receipt; // Holds the generated receipt
+public class View implements ErrorManager.ErrorObserver {
+    private Controller controller;
+    private Receipt receipt;
 
     /**
      * Creates a new instance of the View.
@@ -20,6 +21,11 @@ public class View {
      */
     public View(Controller controller) {
         this.controller = controller;
+    }
+
+    @Override
+    public void handleError(Exception e) {
+        System.out.println("ERROR: " + e.getMessage());
     }
 
     /**
@@ -37,8 +43,10 @@ public class View {
      */
     public ItemDTO scanItem(String itemID, int quantity){
         ItemDTO itemDTO = this.controller.scanItem(itemID, quantity);
-        System.out.println("\nAdd " + quantity + " item(s) with item id " + itemID + ":");
-        System.out.println(itemToString(itemDTO));
+        if (itemDTO != null){
+            System.out.println("\nAdd " + quantity + " item(s) with item id " + itemID + ":");
+            System.out.println(itemToString(itemDTO));
+        }
         return itemDTO;
     }
 

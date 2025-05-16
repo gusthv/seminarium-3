@@ -3,6 +3,8 @@ package se.kth.iv1350.retailstore.integration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
+import se.kth.iv1350.retailstore.util.error.InventoryErrorException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,9 +25,16 @@ class ExternalInventorySystemTest {
     }
 
     @Test
-    void testGetNonExistingItem() {
+    void testGetNonExistingItemIsNull() {
         ItemDTO item = inventorySystem.getItemDTO("9999");
         assertNull(item, "Item with ID 9999 should not exist");
+    }
+
+    @Test
+    void InventoryNotWorkingThrowsError() throws InventoryErrorException {
+        assertThrows(InventoryErrorException.class, () -> {
+            inventorySystem.getItemDTO("2001");
+        }, "Expected InventoryErrorException when fetching item ID '2001'");
     }
 
     @Test

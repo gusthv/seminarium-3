@@ -10,4 +10,11 @@ C:\githubsaker\seminarium-3\retailstore\src\main\java\se\kth\iv1350\retailstore\
 C:\githubsaker\seminarium-3\retailstore\src\main\java\se\kth\iv1350\retailstore\model\ItemAndQuantity.java
 C:\githubsaker\seminarium-3\retailstore\src\main\java\se\kth\iv1350\retailstore\model\Receipt.java
 C:\githubsaker\seminarium-3\retailstore\src\main\java\se\kth\iv1350\retailstore\model\Sale.java
+C:\githubsaker\seminarium-3\retailstore\src\main\java\se\kth\iv1350\retailstore\util\error\ErrorManager.java
+C:\githubsaker\seminarium-3\retailstore\src\main\java\se\kth\iv1350\retailstore\util\error\ErrorObserver.java
+C:\githubsaker\seminarium-3\retailstore\src\main\java\se\kth\iv1350\retailstore\util\error\ErrorStrategy.java
+C:\githubsaker\seminarium-3\retailstore\src\main\java\se\kth\iv1350\retailstore\util\error\FileLogStrategy.java
+C:\githubsaker\seminarium-3\retailstore\src\main\java\se\kth\iv1350\retailstore\util\error\InventoryErrorException.java
+C:\githubsaker\seminarium-3\retailstore\src\main\java\se\kth\iv1350\retailstore\util\error\ItemNotFoundException.java
+C:\githubsaker\seminarium-3\retailstore\src\main\java\se\kth\iv1350\retailstore\util\error\LogToConsoleStrategy.java
 C:\githubsaker\seminarium-3\retailstore\src\main\java\se\kth\iv1350\retailstore\view\View.java

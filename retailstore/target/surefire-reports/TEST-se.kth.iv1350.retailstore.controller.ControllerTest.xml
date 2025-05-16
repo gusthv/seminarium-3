@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="se.kth.iv1350.retailstore.controller.ControllerTest" time="0.39" tests="4" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="se.kth.iv1350.retailstore.controller.ControllerTest" time="0.264" tests="5" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="23"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="SE"/>
     <property name="sun.boot.library.path" value="c:\Program Files\Java\jdk-23\bin"/>
-    <property name="sun.java.command" value="C:\Users\amhul\AppData\Local\Temp\surefire15585887361870244724\surefirebooter-20250513153038107_3.jar C:\Users\amhul\AppData\Local\Temp\surefire15585887361870244724 2025-05-13T15-30-36_444-jvmRun1 surefire-20250513153038107_1tmp surefire_0-20250513153038107_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\amhul\AppData\Local\Temp\surefire5112080039974271451\surefirebooter-20250515143521841_3.jar C:\Users\amhul\AppData\Local\Temp\surefire5112080039974271451 2025-05-15T14-35-20_479-jvmRun1 surefire-20250515143521841_1tmp surefire_0-20250515143521841_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\githubsaker\seminarium-3\retailstore\target\test-classes;C:\githubsaker\seminarium-3\retailstore\target\classes;C:\Users\amhul\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.2\junit-jupiter-api-5.9.2.jar;C:\Users\amhul\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\amhul\.m2\repository\org\junit\platform\junit-platform-commons\1.9.2\junit-platform-commons-1.9.2.jar;C:\Users\amhul\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\amhul\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.2\junit-jupiter-engine-5.9.2.jar;C:\Users\amhul\.m2\repository\org\junit\platform\junit-platform-engine\1.9.2\junit-platform-engine-1.9.2.jar;C:\Users\amhul\.m2\repository\org\apache\commons\commons-lang3\3.12.0\commons-lang3-3.12.0.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\amhul\AppData\Local\Temp\surefire15585887361870244724\surefirebooter-20250513153038107_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\amhul\AppData\Local\Temp\surefire5112080039974271451\surefirebooter-20250515143521841_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="23.0.1+11-39"/>
@@ -58,12 +58,12 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="67.0"/>
   </properties>
-  <testcase name="testStartSaleInitializesSaleDTO" classname="se.kth.iv1350.retailstore.controller.ControllerTest" time="0.241"/>
-  <testcase name="testPaymentDoesNotThrowException" classname="se.kth.iv1350.retailstore.controller.ControllerTest" time="0.031"/>
-  <testcase name="testGetReceiptAfterPaymentReturnsNonNull" classname="se.kth.iv1350.retailstore.controller.ControllerTest" time="0.031">
+  <testcase name="testStartSaleInitializesSaleDTO" classname="se.kth.iv1350.retailstore.controller.ControllerTest" time="0.166"/>
+  <testcase name="testPaymentDoesNotThrowException" classname="se.kth.iv1350.retailstore.controller.ControllerTest" time="0"/>
+  <testcase name="testGetReceiptAfterPaymentReturnsNonNull" classname="se.kth.iv1350.retailstore.controller.ControllerTest" time="0.016">
     <system-out><![CDATA[
 --------------Begin Receipt-------------
-Time of Sale: 2025-05-13 15:30:40
+Time of Sale: 2025-05-15 14:35:24
 
 tomat             1 x   5,00      5,00 SEK
 
@@ -76,5 +76,6 @@ Change:                   95,00 SEK
 
 ]]></system-out>
   </testcase>
-  <testcase name="testScanItemReturnsCorrectItem" classname="se.kth.iv1350.retailstore.controller.ControllerTest" time="0.004"/>
+  <testcase name="testScanItemReturnsCorrectItem" classname="se.kth.iv1350.retailstore.controller.ControllerTest" time="0"/>
+  <testcase name="testGetNonExistingItemThrowsError" classname="se.kth.iv1350.retailstore.controller.ControllerTest" time="0.015"/>
 </testsuite>

@@ -2,6 +2,8 @@ package se.kth.iv1350.retailstore.controller;
 
 import se.kth.iv1350.retailstore.model.*;
 import se.kth.iv1350.retailstore.integration.*;
+import se.kth.iv1350.retailstore.util.error.*;
+import se.kth.iv1350.retailstore.util.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,15 +21,23 @@ public class Controller {
     private ExternalAccountingSystem externalAccountingSystem;
     private CashRegister cashRegister;
     private Printer printer;
+    private final ErrorManager errorManager;
  
      /**
      * Creates a new instance of Controller and initializes all external systems.
      */
-    public Controller(ExternalInventorySystem externalInventorySystem, CashRegister cashRegister, ExternalAccountingSystem externalAccountingSystem, Printer printer) {
+    public Controller(ExternalInventorySystem externalInventorySystem, CashRegister cashRegister, ExternalAccountingSystem externalAccountingSystem, Printer printer, ErrorManager errorManager) {
         this.externalInventorySystem = externalInventorySystem;
         this.cashRegister = cashRegister;
         this.externalAccountingSystem = externalAccountingSystem;
         this.printer = printer;
+        this.errorManager = errorManager;
+    }
+
+    private List<RevenueObserver> revenueObservers = new ArrayList<>();
+
+    public void addRevenueObserver(RevenueObserver obs) {
+        revenueObservers.add(obs);
     }
     
     /**
@@ -41,6 +51,9 @@ public class Controller {
             java.time.LocalDateTime.now(),
             false);
         this.sale = new Sale(this.saleDTO, this.cashRegister, this.externalAccountingSystem, this.externalInventorySystem);
+        for (RevenueObserver obs : revenueObservers) {
+            this.sale.addRevenueObserver(obs);
+        }
     }
 
     /**
@@ -49,10 +62,19 @@ public class Controller {
      * @param quantity The number of units of the item being scanned.
      * @return The scanned {@link ItemDTO}.
      */
-    public ItemDTO scanItem(String itemID, int quantity){
+    public ItemDTO scanItem(String itemID, int quantity) {
+        try {
         ItemDTO itemDTO = externalInventorySystem.getItemDTO(itemID);
-        this.saleDTO = sale.addItemToSale(itemDTO, quantity);
-        return itemDTO;
+        if (itemDTO == null) {
+            throw new ItemNotFoundException("Item with ID " + itemID + " was not found in inventory.");
+        }
+            this.saleDTO = sale.addItemToSale(itemDTO, quantity);
+            return itemDTO;
+        }
+        catch (ItemNotFoundException | InventoryErrorException e) {
+            errorManager.notifyError(e);
+            return null;
+        }
     }
 
     /**
@@ -70,8 +92,8 @@ public class Controller {
      * @return The completed {@link SaleDTO}.
      */
     public SaleDTO endSale(){
-        final SaleDTO concludedSale = this.sale.endSale();
-        return concludedSale;
+        final SaleDTO concludedSale = this.sale.endSale(); 
+        return concludedSale; 
     }
 
     /**

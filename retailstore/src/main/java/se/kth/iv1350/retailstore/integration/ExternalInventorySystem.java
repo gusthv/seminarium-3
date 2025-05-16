@@ -1,23 +1,43 @@
 package se.kth.iv1350.retailstore.integration;
 
+import se.kth.iv1350.retailstore.util.error.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
+import se.kth.iv1350.retailstore.util.error.InventoryErrorException;
+
 /**
- * Represents an external system that provides item information used in the
- * retail process.
- * It stores items in a HashMap using their item ID as the key.
+ * A singleton representing an external inventory system that stores available
+ * items.
+ * The inventory is initialized with example items upon first instantiation.
  */
 public class ExternalInventorySystem {
+    private static ExternalInventorySystem instance;
     private final Map<String, ItemDTO> externalInventorySystem;
 
     /**
-     * Creates a new instance of the external inventory system and populates it with
-     * example items.
+     * Private constructor to enforce singleton pattern.
+     * Initializes the inventory system and populates it with example items.
      */
-    public ExternalInventorySystem() {
+    private ExternalInventorySystem() {
         externalInventorySystem = new HashMap<>();
         populateInventory();
+    }
+
+    /**
+     * Provides the global access point to the singleton instance of the inventory
+     * system.
+     * If no instance exists yet, one is created.
+     * 
+     * @return The singleton instance of ExternalInventorySystem
+     */
+    public static ExternalInventorySystem getInstance() {
+        if (instance == null)
+        {
+            instance = new ExternalInventorySystem();
+        }
+        return instance;
     }
 
     /**
@@ -39,8 +59,12 @@ public class ExternalInventorySystem {
      * @param itemID The unique identifier for the requested item.
      * @return The <code>ItemDTO</code> corresponding to the given item ID, or
      *         <code>null</code> if not found.
+     * @throws InventoryErrorException If a specific item identifier is fetched as a simulation.
      */
-    public ItemDTO getItemDTO(String itemID){
-        return externalInventorySystem.get(itemID);
+    public ItemDTO getItemDTO(String itemID) throws InventoryErrorException {
+    if (itemID.equals("2001")) {
+        throw new InventoryErrorException("Inventory is malfunctioning");
+    }
+    return externalInventorySystem.get(itemID);
     }
 }

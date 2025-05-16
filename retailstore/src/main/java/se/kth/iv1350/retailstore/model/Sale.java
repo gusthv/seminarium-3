@@ -7,6 +7,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import se.kth.iv1350.retailstore.integration.*;
+import se.kth.iv1350.retailstore.util.*;
 
 /**
  * Represents an ongoing or completed sale. Handles all logic for
@@ -34,6 +35,33 @@ public class Sale {
     }
 
     /**
+     * List of registered observers that will be notified when new revenue is
+     * generated.
+     * Initialized as empty ArrayList.
+     */
+    private final List<RevenueObserver> revenueObservers = new ArrayList<>();
+
+    /**
+     * Registers a new observer to receive revenue updates.
+     * The observer will be notified whenever new revenue is generated.
+     * @param observer The RevenueObserver implementation to register
+     */
+    public void addRevenueObserver(RevenueObserver observer) {
+        revenueObservers.add(observer);
+    }
+
+    /**
+     * Notifies all registered observers about new revenue.
+     * All observer's newRevenue() methods will be called with the given revenue amount.
+     * @param revenue The revenue amount to notify observers about
+     */
+    private void notifyRevenueObservers(double revenue) {
+        for (RevenueObserver obs : revenueObservers) {
+            obs.newRevenue(revenue);
+        }
+    }
+
+    /**
      * Finalizes the sale by calculating change, registering the payment,
      * updating the cash register, and sending information to external systems.
      * @param initialPayment The payment initiated by the customer.
@@ -44,6 +72,7 @@ public class Sale {
         this.cashPayment = finalPayment;
         this.cashRegister.addPayment(finalPayment);
         this.externalAccountingSystem.sendSaleInformation(this.saleDTO, finalPayment);
+        notifyRevenueObservers(saleDTO.totalCost());
     }
 
     /**

@@ -11,7 +11,7 @@ import se.kth.iv1350.retailstore.integration.Printer;
 import se.kth.iv1350.retailstore.model.CashRegister;
 import se.kth.iv1350.retailstore.model.ItemAndQuantity;
 import se.kth.iv1350.retailstore.model.Receipt;
-
+import se.kth.iv1350.retailstore.util.error.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ControllerTest {
@@ -23,8 +23,9 @@ public void setUp() {
     CashRegister cashRegister = new CashRegister();
     ExternalAccountingSystem accounting = new ExternalAccountingSystem();
     Printer printer = new Printer();
+    ErrorManager errorManager = new ErrorManager();
 
-    controller = new Controller(inventory, cashRegister, accounting, printer);
+    controller = new Controller(inventory, cashRegister, accounting, printer, errorManager);
     controller.startSale();
 }
 
@@ -60,6 +61,13 @@ public void setUp() {
         assertTrue(receiptStr.contains("100"), "Receipt should contain payment of 100");
         assertTrue(receiptStr.contains("tomat"), "Receipt should contain item 'tomat'");
         assertTrue(receiptStr.contains("5"), "Receipt should contain price of 'tomat'");
+    }
+
+    @Test
+    void testGetNonExistingItemThrowsError() {
+        assertThrows(ItemNotFoundException.class, () -> {
+        controller.scanItem("1008", 2);
+        }, "Should throw error: Item with ID 1008 was not found in invetory.");
     }
 }
 

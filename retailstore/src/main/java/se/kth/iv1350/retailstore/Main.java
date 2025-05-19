@@ -1,6 +1,7 @@
 package se.kth.iv1350.retailstore;
 
 import se.kth.iv1350.retailstore.controller.Controller;
+import se.kth.iv1350.retailstore.view.TotalRevenueView;
 import se.kth.iv1350.retailstore.view.View;
 import se.kth.iv1350.retailstore.model.CashRegister;
 import se.kth.iv1350.retailstore.integration.*;
@@ -26,6 +27,9 @@ public class Main {
         errorManager.addObserver(view);
 
         TotalRevenueFileOutput fileOutput = new TotalRevenueFileOutput();
+
+        TotalRevenueView revenueView = new TotalRevenueView();
+        controller.addRevenueObserver(revenueView);
         controller.addRevenueObserver(fileOutput);
 
         view.startSale();

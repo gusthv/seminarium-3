@@ -4,3 +4,11 @@
 1650.0
 [2025-05-16T14:33:40.082702600] Total revenue in SEK: 
 2625.0
+[2025-05-19T17:31:58.120539100] Total revenue in SEK: 
+3600.0
+[2025-05-19T17:33:30.540300] Total revenue in SEK: 
+4575.0
+[2025-05-19T18:11:00.010403] Total revenue in SEK: 
+5525.0
+[2025-05-19T18:12:00.390593500] Total revenue in SEK: 
+6475.0

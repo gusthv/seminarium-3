@@ -29,5 +29,6 @@ public class TotalRevenueView implements RevenueObserver {
     @Override
     public void newRevenue(double revenue) {
         totalRevenue += revenue;
+        System.out.printf("\nTotal revenue: %.2f SEK%n", totalRevenue);
     }
 }

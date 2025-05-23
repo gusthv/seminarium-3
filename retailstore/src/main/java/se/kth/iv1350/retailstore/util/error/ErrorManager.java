@@ -9,6 +9,15 @@ import java.util.List;
  */
 public class ErrorManager {
     private ErrorStrategy strategy;
+    private List<ErrorStrategy> strategies = new ArrayList<>();
+
+    /**
+     * Adds a strategy.
+     * @param strategy The new strategy.
+     */
+    public void addStrategy(ErrorStrategy strategy) {
+        strategies.add(strategy);
+    }
 
     /**
      * Observer interface for receiving error notifications.
@@ -18,15 +27,6 @@ public class ErrorManager {
     }
 
     private final List<ErrorObserver> observers = new ArrayList<>();
-
-    /**
-     * Sets the strategy to use for handling errors.
-     * 
-     * @param strategy The error handling strategy.
-     */
-    public void setStrategy(ErrorStrategy strategy) {
-        this.strategy = strategy;
-    }
 
     /**
      * Adds an observer to be notified on error.
@@ -43,12 +43,12 @@ public class ErrorManager {
      * @param e The exception to handle.
      */
     public void notifyError(Exception e) {
-        if (strategy != null) {
-            strategy.handle(e);
-        }
+            for (ErrorStrategy strategy : strategies) {
+                strategy.handle(e);
+            }
 
-        for (ErrorObserver observer : observers) {
-            observer.handleError(e);
-        }
+            for (ErrorObserver observer : observers) {
+                observer.handleError(e);
+            }
     }
 }

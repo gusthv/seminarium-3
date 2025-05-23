@@ -14,18 +14,28 @@ import se.kth.iv1350.retailstore.util.error.*;
 public class View implements ErrorManager.ErrorObserver {
     private Controller controller;
     private Receipt receipt;
+    private final ErrorManager errorManager;
 
     /**
      * Creates a new instance of the View.
      * @param controller The controller to communicate with.
      */
-    public View(Controller controller) {
+    public View(Controller controller, ErrorManager errorManager) {
         this.controller = controller;
+        this.errorManager = errorManager;
     }
 
+    /**
+     * Displays an error message to the user.
+     * @param e The received error.
+     */
     @Override
     public void handleError(Exception e) {
-        System.out.println("ERROR: " + e.getMessage());
+        if (e instanceof ItemNotFoundException) {
+        System.out.println("\nThe item could not be found. Please check the item ID and try again.");
+        } else if (e instanceof InventoryErrorException ) {
+        System.out.println("\nWe're having trouble connecting to our inventory system, please try again later.");
+        }
     }
 
     /**
@@ -42,12 +52,19 @@ public class View implements ErrorManager.ErrorObserver {
      * @return The scanned item's DTO.
      */
     public ItemDTO scanItem(String itemID, int quantity){
+        try {
         ItemDTO itemDTO = this.controller.scanItem(itemID, quantity);
         if (itemDTO != null){
             System.out.println("\nAdd " + quantity + " item(s) with item id " + itemID + ":");
             System.out.println(itemToString(itemDTO));
         }
         return itemDTO;
+        }
+        catch (ItemNotFoundException | InventoryErrorException e) {
+            errorManager.notifyError(e);
+            //return null;
+            throw e;
+        }
     }
 
     /**

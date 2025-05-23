@@ -20,10 +20,12 @@ public class Main {
         ExternalAccountingSystem externalAccountingSystem = new ExternalAccountingSystem();
         Printer printer = new Printer();
         ErrorManager errorManager = new ErrorManager();
-        errorManager.setStrategy(new FileLogStrategy());
-        Controller controller = new Controller(externalInventorySystem, cashRegister, externalAccountingSystem, printer, errorManager);
+        //errorManager.setStrategy(new FileLogStrategy());
+        errorManager.addStrategy(new LogToConsoleStrategy());
+        errorManager.addStrategy(new FileLogStrategy());
+        Controller controller = new Controller(externalInventorySystem, cashRegister, externalAccountingSystem, printer);
 
-        View view = new View(controller);
+        View view = new View(controller, errorManager);
         errorManager.addObserver(view);
 
         TotalRevenueFileOutput fileOutput = new TotalRevenueFileOutput();

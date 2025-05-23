@@ -5,8 +5,6 @@ import se.kth.iv1350.retailstore.util.error.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import se.kth.iv1350.retailstore.util.error.InventoryErrorException;
-
 /**
  * A singleton representing an external inventory system that stores available
  * items.
@@ -67,9 +65,14 @@ public class ExternalInventorySystem {
      * @throws InventoryErrorException If a specific item identifier is fetched as a simulation.
      */
     public ItemDTO getItemDTO(String itemID) throws InventoryErrorException {
-    if (itemID.equals("2001")) {
-        throw new InventoryErrorException("Inventory is malfunctioning");
-    }
-    return externalInventorySystem.get(itemID);
+        if (itemID.equals("2001")) {
+            throw new InventoryErrorException("Inventory is malfunctioning");
+        }
+        ItemDTO foundItem = externalInventorySystem.get(itemID);
+        if (foundItem == null){
+            throw new ItemNotFoundException("Item with ID " + itemID + " was not found in inventory.");
+        } else {
+        return foundItem;
+        }
     }
 }

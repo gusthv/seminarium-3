@@ -21,17 +21,15 @@ public class Controller {
     private ExternalAccountingSystem externalAccountingSystem;
     private CashRegister cashRegister;
     private Printer printer;
-    private final ErrorManager errorManager;
  
      /**
      * Creates a new instance of Controller and initializes all external systems.
      */
-    public Controller(ExternalInventorySystem externalInventorySystem, CashRegister cashRegister, ExternalAccountingSystem externalAccountingSystem, Printer printer, ErrorManager errorManager) {
+    public Controller(ExternalInventorySystem externalInventorySystem, CashRegister cashRegister, ExternalAccountingSystem externalAccountingSystem, Printer printer) {
         this.externalInventorySystem = externalInventorySystem;
         this.cashRegister = cashRegister;
         this.externalAccountingSystem = externalAccountingSystem;
         this.printer = printer;
-        this.errorManager = errorManager;
     }
 
     private List<RevenueObserver> revenueObservers = new ArrayList<>();
@@ -63,18 +61,9 @@ public class Controller {
      * @return The scanned {@link ItemDTO}.
      */
     public ItemDTO scanItem(String itemID, int quantity) {
-        try {
         ItemDTO itemDTO = externalInventorySystem.getItemDTO(itemID);
-        if (itemDTO == null) {
-            throw new ItemNotFoundException("Item with ID " + itemID + " was not found in inventory.");
-        }
             this.saleDTO = sale.addItemToSale(itemDTO, quantity);
             return itemDTO;
-        }
-        catch (ItemNotFoundException | InventoryErrorException e) {
-            errorManager.notifyError(e);
-            return null;
-        }
     }
 
     /**

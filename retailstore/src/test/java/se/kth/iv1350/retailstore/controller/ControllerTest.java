@@ -24,9 +24,8 @@ public void setUp() {
     CashRegister cashRegister = new CashRegister();
     ExternalAccountingSystem accounting = new ExternalAccountingSystem();
     Printer printer = new Printer();
-    ErrorManager errorManager = new ErrorManager();
 
-    controller = new Controller(inventory, cashRegister, accounting, printer, errorManager);
+    controller = new Controller(inventory, cashRegister, accounting, printer);
     controller.startSale();
 }
 

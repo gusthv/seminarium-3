@@ -40,8 +40,8 @@ public class Main {
         view.scanItem("1003", 10);
         view.scanItem("1004", 5);
         view.scanItem("1005", 5);
-        view.scanItem("2001", 5);
         view.scanItem("1009", 2);
+        
         view.scanItem("1001", 5);
         view.scanItem("1006", 7);
         view.scanItem("1001", 5);

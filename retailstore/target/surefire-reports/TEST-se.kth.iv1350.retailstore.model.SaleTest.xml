@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="SE"/>
     <property name="sun.boot.library.path" value="c:\Program Files\Java\jdk-23\bin"/>
-    <property name="sun.java.command" value="C:\Users\amhul\AppData\Local\Temp\surefire17376235297140927017\surefirebooter-20250523203309955_3.jar C:\Users\amhul\AppData\Local\Temp\surefire17376235297140927017 2025-05-23T20-33-08_625-jvmRun1 surefire-20250523203309955_1tmp surefire_0-20250523203309955_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\amhul\AppData\Local\Temp\surefire2705640101685692859\surefirebooter-20250531181722621_3.jar C:\Users\amhul\AppData\Local\Temp\surefire2705640101685692859 2025-05-31T18-17-20_913-jvmRun1 surefire-20250531181722621_1tmp surefire_0-20250531181722621_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\githubsaker\seminarium-3\retailstore\target\test-classes;C:\githubsaker\seminarium-3\retailstore\target\classes;C:\Users\amhul\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.2\junit-jupiter-api-5.9.2.jar;C:\Users\amhul\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\amhul\.m2\repository\org\junit\platform\junit-platform-commons\1.9.2\junit-platform-commons-1.9.2.jar;C:\Users\amhul\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\amhul\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.2\junit-jupiter-engine-5.9.2.jar;C:\Users\amhul\.m2\repository\org\junit\platform\junit-platform-engine\1.9.2\junit-platform-engine-1.9.2.jar;C:\Users\amhul\.m2\repository\org\apache\commons\commons-lang3\3.12.0\commons-lang3-3.12.0.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\amhul\AppData\Local\Temp\surefire17376235297140927017\surefirebooter-20250523203309955_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\amhul\AppData\Local\Temp\surefire2705640101685692859\surefirebooter-20250531181722621_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="23.0.1+11-39"/>
@@ -58,8 +58,8 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="67.0"/>
   </properties>
-  <testcase name="testPay" classname="se.kth.iv1350.retailstore.model.SaleTest" time="0.009"/>
-  <testcase name="testAddItemToSale" classname="se.kth.iv1350.retailstore.model.SaleTest" time="0.006"/>
+  <testcase name="testPay" classname="se.kth.iv1350.retailstore.model.SaleTest" time="0.006"/>
+  <testcase name="testAddItemToSale" classname="se.kth.iv1350.retailstore.model.SaleTest" time="0.012"/>
   <testcase name="testSaleWithMultipleItems" classname="se.kth.iv1350.retailstore.model.SaleTest" time="0"/>
   <testcase name="testGetReceipt" classname="se.kth.iv1350.retailstore.model.SaleTest" time="0"/>
 </testsuite>

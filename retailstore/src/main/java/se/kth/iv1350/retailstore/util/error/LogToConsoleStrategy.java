@@ -7,7 +7,7 @@ package se.kth.iv1350.retailstore.util.error;
 public class LogToConsoleStrategy implements ErrorStrategy {
     @Override
     public void handle(Exception e) {
-        System.err.println("[SYSTEM ERROR] " + e.getClass().getSimpleName());
+        System.err.println("\n[SYSTEM ERROR] " + e.getClass().getSimpleName());
         System.err.println("Details: " + e.getMessage());
     }
 }

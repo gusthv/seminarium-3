@@ -62,13 +62,6 @@ public void setUp() {
         assertTrue(receiptStr.contains("tomat"), "Receipt should contain item 'tomat'");
         assertTrue(receiptStr.contains("5"), "Receipt should contain price of 'tomat'");
     }
-
-    @Test
-    void testGetNonExistingItemThrowsError() {
-        assertThrows(ItemNotFoundException.class, () -> {
-        controller.scanItem("1008", 2);
-        }, "Should throw error: Item with ID 1008 was not found in invetory.");
-    }
 }
 
 

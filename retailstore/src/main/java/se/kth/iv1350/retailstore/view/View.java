@@ -62,8 +62,8 @@ public class View implements ErrorManager.ErrorObserver {
         }
         catch (ItemNotFoundException | InventoryErrorException e) {
             errorManager.notifyError(e);
-            //return null;
-            throw e;
+            return null;
+            //throw e;
         }
     }
 
